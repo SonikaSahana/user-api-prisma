@@ -33,3 +33,20 @@ Clear documentation helped me understand differences from Sequelize.
 
 Excited to explore more Prisma features in upcoming tasks.
 
+Day 2- Added Joi Validation:
+
+Installed joi for input validation.
+
+Created a separate middleware (validate.js) to handle request validation.
+
+Used Joi to ensure:
+
+name is a required string.
+
+email is a valid, required email.
+
+Applied this middleware to the POST and PUT routes in the user router.
+
+This made the API more secure by preventing invalid data from hitting the database.
+
+
