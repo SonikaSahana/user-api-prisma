@@ -1,9 +1,11 @@
 const express = require('express');
 const router= express.Router();
 const userController = require('../controllers/userController');
-router.post('/', userController.createUser);
+const { userSchema } = require('../validator/userValidator');
+const { validate } = require('../middleware/validateMiddleware');
+router.post('/', validate(userSchema),userController.createUser);
 router.get('/', userController.getAllUsers);
 router.get('/:id', userController.getUser);
-router.put('/:id', userController.updateUser);
+router.put('/:id',validate(userSchema), userController.updateUser);
 router.delete('/:id', userController.deleteUser);
 module.exports = router;
