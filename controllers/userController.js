@@ -1,11 +1,23 @@
 const prisma = require('../models/prismaClient');
+const { userSchema } = require('../validator/userValidator');
+const bcrypt= require('bcrypt');
 
 exports.createUser = async (req, res) => {
     try{
+      const{name, email, password} = req.body;
+      const existingUser = await prisma.user.findUnique({where: { email }});
+      if (existingUser) { 
+        return res.status(400).json({ error: 'User with this email already exists' });
+      }
+      const hashedPassword = await bcrypt.hash(password,10)
       const user= await prisma.user.create({
-        data: req.body
+        data: {
+          name,
+          email,
+          password: hashedPassword,
+        },
       })
-      res.status(201).json(user);
+      res.status(201).json({message:"user created successfully", user});
     }
     catch(error){
      
@@ -13,6 +25,7 @@ exports.createUser = async (req, res) => {
 
     }
 }
+ 
 
 exports.getAllUsers = async (req, res) => {
     try{
