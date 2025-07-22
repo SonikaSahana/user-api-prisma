@@ -9,7 +9,7 @@ const authenticate = (req, res, next) => {
         return res.status(401).json({ error: 'No token provided' });
     }
 
-    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+    jwt.verify(token, process.env.SECRET_KEY, async (err, decoded) => {
         if (err) {
             return res.status(403).json({ error: 'Failed to authenticate token' });
         }
